@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import PostCard from "../../components/Post/PostCard/PostCard";
 import { PostInfo } from "../../interface/postDetail";
 import Link from "next/link";
+import { NextPage } from "next";
 
-const search = () => {
+const Search: NextPage = () => {
   const [postList, setPostList] = useState<PostInfo[]>([]);
   const router = useRouter();
   const { q } = router.query;
@@ -32,11 +33,4 @@ const search = () => {
     </div>
   );
 };
-export default search;
-
-// export async function getServerSideProps() {
-//   //   const { data } = await customAxios.get("");
-//   return {
-//     // props: { postList: data }, // will be passed to the page component as props
-//   };
-// }
+export default Search;
