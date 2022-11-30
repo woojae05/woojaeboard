@@ -11,16 +11,27 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ postList }) => {
+  console.log(postList);
+
   return (
     <div className="pageContainer">
-      {postList.map((post) => (
-        <Link href={`/post/${post.id}`} key={post.id}>
-          <PostCard postInfo={post} />
+      <div>
+        {postList.length != 0 ? (
+          <>
+            {postList.map((post) => (
+              <Link href={`/post/${post.id}`} key={post.id}>
+                <PostCard postInfo={post} />
+              </Link>
+            ))}
+          </>
+        ) : (
+          <h1>게시물이 없습니다</h1>
+        )}
+
+        <Link href={"/post/register"}>
+          <RegisterButton>글 쓰기</RegisterButton>
         </Link>
-      ))}
-      <Link href={"/post/register"}>
-        <RegisterButton>글 쓰기</RegisterButton>
-      </Link>
+      </div>
     </div>
   );
 };
@@ -40,6 +51,7 @@ const RegisterButton = styled.button`
 
 export async function getServerSideProps() {
   const { data } = await customAxios.get("post/");
+
   return {
     props: { postList: data }, // will be passed to the page component as props
   };

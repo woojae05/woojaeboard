@@ -10,6 +10,7 @@ const Search: NextPage = () => {
   const [postList, setPostList] = useState<PostInfo[]>([]);
   const router = useRouter();
   const { q } = router.query;
+
   useEffect(() => {
     customAxios.get(`/post/search?q=${q}`).then((res) => {
       const { data } = res;
@@ -20,7 +21,7 @@ const Search: NextPage = () => {
   return (
     <div className="pageContainer">
       {postList.length === 0 ? (
-        <p>게시물이 없습니다</p>
+        <p>검색 결과가 없습니다</p>
       ) : (
         postList.map((post) => {
           return (

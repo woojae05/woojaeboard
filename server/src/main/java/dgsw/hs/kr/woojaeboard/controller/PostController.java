@@ -28,8 +28,12 @@ public class PostController {
 
     @GetMapping("/{id}")
     public Post getById(@PathVariable Long id){
+
+        // id로 db에서 post 가져오기
         Optional<Post> optional = postRepository.findById(id);
         Post post = optional.get();
+
+        // viwe 업데이트
         Post updateViewPost = Post.builder()
                 .id(id)
                 .author(post.getAuthor())
@@ -38,7 +42,10 @@ public class PostController {
                 .createdTime(post.getCreatedTime())
                 .views(post.getViews()+1)
                 .build();
+
+        // 저장
         postRepository.save(updateViewPost);
+
         return updateViewPost;
     }
 
@@ -56,7 +63,7 @@ public class PostController {
     }
 
     @PostMapping("register")
-    public void register(@RequestBody  Post post){
+    public void register(@RequestBody Post post){
         Post newPost =  Post.builder()
                 .author(post.getAuthor())
                 .content(post.getContent())

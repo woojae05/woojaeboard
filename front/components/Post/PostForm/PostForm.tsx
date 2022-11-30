@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Router from "next/router";
 import { customAxios } from "../../../lib/customAxios";
 import styled from "styled-components";
+import AuthApi from "../../../api/Auth";
 
 const PostForm = () => {
+  const getUserInfo = async () => {
+    const { data } = await AuthApi.GetUserInfo();
+    setPostInfo((prev) => ({ ...prev, author: data.name }));
+  };
+  useEffect(() => {
+    getUserInfo();
+  }, []);
   const registerPost = (postInfo: any) => {
     customAxios.post("/post/register", postInfo).then((res) => {
       Router.push("/");
